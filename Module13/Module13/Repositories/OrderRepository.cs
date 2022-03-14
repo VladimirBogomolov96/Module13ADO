@@ -10,24 +10,22 @@ namespace Module13.Repositories
 {
     public class OrderRepository : Repository 
     {
+        private const string sqlDateFormat = "yyyy-MM-dd";
+
         public OrderRepository(string connectionString) : base(connectionString)
         {
         }
 
         public async Task InsertOrderAsync(Order order)
         {
-            string format = "yyyy-MM-dd";
-
-            string query = $"INSERT INTO [Order] VALUES ({(int)order.Status}, '{order.CreatedDate.ToString(format)}', '{order.UpdatedDate.ToString(format)}', {order.ProductId})";
+            string query = $"INSERT INTO [Order] VALUES ({(int)order.Status}, '{order.CreatedDate.ToString(OrderRepository.sqlDateFormat)}', '{order.UpdatedDate.ToString(OrderRepository.sqlDateFormat)}', {order.ProductId})";
 
             await this.ExecuteNonQueryQueryAsync(query);
         }
 
         public async Task UpdateOrderByIdAsync(int id, Order order)
         {
-            string format = "yyyy-MM-dd";
-
-            string query = $"UPDATE [Order] SET Status = {(int)order.Status}, CreatedDate = '{order.CreatedDate.ToString(format)}', UpdatedDate = '{order.UpdatedDate.ToString(format)}', ProductId = {order.ProductId} WHERE Id = '{id}'";
+            string query = $"UPDATE [Order] SET Status = {(int)order.Status}, CreatedDate = '{order.CreatedDate.ToString(OrderRepository.sqlDateFormat)}', UpdatedDate = '{order.UpdatedDate.ToString(OrderRepository.sqlDateFormat)}', ProductId = {order.ProductId} WHERE Id = '{id}'";
 
             await this.ExecuteNonQueryQueryAsync(query);
         }
