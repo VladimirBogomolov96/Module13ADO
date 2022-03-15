@@ -74,5 +74,38 @@ namespace Module13.Repositories
 
             return result;
         }
+
+        public List<Product> GetProductsDisconnected()
+        {
+            DataSet dataSet = new DataSet();
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter("SELECT *  FROM Product", sqlConnection);
+
+                sqlDataAdapter.Fill(dataSet);
+            }
+
+            DataTable table = dataSet.Tables[0];
+            List<Product> products = new List<Product>(table.Rows.Count);
+
+            foreach(DataRow row in table.Rows)
+            {
+                Product product = new Product()
+                {
+                    Id = (int)row["Id"],
+                    Name = (string)row["Name"],
+                    Description = (string)row["Description"],
+                    Weight = (int)row["Weight"],
+                    Height = (int)row["Height"],
+                    Width = (int)row["Width"],
+                    Length = (int)row["Length"]
+                };
+
+                products.Add(product);
+            }
+
+            return products;
+        }
     }
 }

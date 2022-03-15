@@ -53,6 +53,20 @@ namespace Module13.Tests
         }
 
         [TestMethod]
+        public void GetProductsDisconnected_ReturnsExpectedProducts()
+        {
+            // Act
+            List<Product> actual = this.productRepository.GetProductsDisconnected();
+
+            // Assert
+            Assert.AreEqual(this.initialProducts.Length, actual.Count);
+            for (int i = 0; i < actual.Count; i++)
+            {
+                Assert.IsTrue(this.AreProductsEqual(actual[i], this.initialProducts[i]));
+            }
+        }
+
+        [TestMethod]
         public async Task InsertProductAsync_AddsProduct()
         {
             // Arrange
